@@ -14,8 +14,15 @@
 </head>
 
 <body>
-    {% include "snippets/navbar.html" %}
-    <div class="main">{% block content %}{% endblock content %}</div>
+{% include "snippets/navbar.html" %} <!-- navbar -->
+
+{% if messages %} <!-- messages -->
+    {% for message in messages %}
+        <div class="alert alert-danger"><h1 class="text-center">{{ message }}</h1></div>
+    {% endfor %}
+{% endif %}<!-- messages -->
+
+<div class="main">{% block content %}{% endblock content %}</div>
 
 </body>
 

@@ -2,8 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, update_session_auth_hash
-from accounts.forms import SignupForm, UserForm, ProfileForm
+from django.contrib.auth import authenticate, login, update_session_auth_hash, logout
+from accounts.forms import SignupForm, UserForm, ProfileForm, AuthenticationForm
 from accounts.models import Profile
 
 
@@ -16,7 +16,7 @@ def register(request):  # ou appeler  signin
             mon_password = form.cleaned_data['password1']  # extraire password depuis le form
             user = authenticate(username=mon_username, password=mon_password)  # préparer le user
             login(request, user)  # faire le login
-            messages.success(request, 'created') # qui sera affiché dans redirect template
+            messages.success(request, 'created')  # qui sera affiché dans redirect template
             return redirect('/accounts/profile')  # redirect vers ...
     else:  # show form
         form = SignupForm()
@@ -28,6 +28,34 @@ def profile(request):
     storage = messages.get_messages(request)
     profile_ = Profile.objects.get(user=request.user)  # get profile qui a user(dans profile) = au user request
     return render(request, 'accounts/profile/profile.html', {'profile': profile_, 'messages': storage})
+
+
+def login_view(request):
+    context = {}
+    user = request.user  # si request.user est authenticated alors ==> profile
+    if user.is_authenticated:  # si request.user est authenticated alors ==> profile
+        return redirect("home")  # si request.user est authenticated alors ==> profile
+    if request.POST:
+        form = AuthenticationForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)  # authenticated
+            if user:
+                login(request, user)
+                messages.success(request, 'login in the site')  # qui sera affiché dans redirect template
+                return redirect("accounts:profile")  # REDIRECT to home
+    else:  # request.GET:
+        form = AuthenticationForm()   # form vide
+    context = {'form': form}
+    return render(request, "accounts/registration/login.html", context)
+
+
+#  #$#       view de logout utilisé dans  => logout.html et meme dans base.html
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'you are logged out')  # qui sera affiché dans redirect template
+    return redirect('home')
 
 
 @login_required

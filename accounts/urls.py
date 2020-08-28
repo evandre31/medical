@@ -1,5 +1,7 @@
 from django.urls import path, include
-from . import views
+
+from accounts import views
+from accounts.views import login_view, logout_view
 from django.conf.urls import url  # changement de mot de passe
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
 from django.contrib.auth import views as auth_views  # paquet de views user _________
@@ -7,14 +9,15 @@ from django.contrib.auth import views as auth_views  # paquet de views user ____
 app_name = 'accounts'
 
 urlpatterns = [
-    path('login/',
-         auth_views.LoginView.as_view(template_name='accounts/registration/login.html'),
-         name='login'),
-    path('logout/',
-         auth_views.LogoutView.as_view(template_name='accounts/registration/logged_out.html'),
-         name='logout'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    # path('login/',
+    #      auth_views.LoginView.as_view(template_name='accounts/registration/login.html'),
+    #      name='login'),
+    # path('logout/',
+    #      auth_views.LogoutView.as_view(template_name='accounts/registration/logged_out.html'),
+    #      name='logout'),
     path('register/', views.register, name='register'),
-
     path('profile/', views.profile, name='profile'),
     path('profile/edit', views.profile_edit, name='profile_edit'),
     # path('change_password/', views.change_password, name='change_password'),_________________
