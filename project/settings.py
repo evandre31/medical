@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'patient.apps.PatientConfig',
     'django_cleanup.apps.CleanupConfig',
 ]
 

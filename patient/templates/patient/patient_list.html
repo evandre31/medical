@@ -1,0 +1,29 @@
+{% extends 'patient/base.html' %}
+
+{% block content %}
+    <h1 class="page-header">liste des Patients d'anesthesie</h1>
+    <button class="btn btn-primary show-form" data-url="{% url 'patient:patient_create' %}">
+        <span class="glyphicon glyphicon-plus"></span>
+        nouvelle Patient
+    </button>
+    <table class="table" id="book-table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>nom</th>
+            <th>prénom</th>
+            <th>datedenaissance</th>
+            <th>doctor</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'patient/Patient_list_2.html' %}
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="modal-book">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+{% endblock %}

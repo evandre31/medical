@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('patient/', include('patient.urls', namespace='patient')),
 
 ]
 # -----------#*#pour charger une image depuis media vers template ________  ######
