@@ -3,14 +3,13 @@
 
 <head>
     {% include "snippets/header.html" %}
-    <title>Title</title>
+    <title>{% block title %}{% endblock title %}</title>
     <style type="text/css"> {# agrandir body pour que footer soit toujours en bas #}
     .main {
         min-height: 100vh;
         height: 100%;
     }
     </style><!-- agrandir body 'main' pour que footer soit toujours en bas -->
-
 </head>
 
 <body>

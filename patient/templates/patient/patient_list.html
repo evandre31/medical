@@ -7,23 +7,26 @@
         nouvelle Patient
     </button>
     <table class="table" id="book-table">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>nom</th>
-            <th>prénom</th>
-            <th>datedenaissance</th>
-            <th>doctor</th>
-        </tr>
+        <thead class="thead-light">
+            <tr>
+                <th>#</th>
+                <th>nom</th>
+                <th>prénom</th>
+                <th>datedenaissance</th>
+                <th>doctor</th>
+                <th>action</th>
+            </tr>
         </thead>
         <tbody>
-        {% include 'patient/Patient_list_2.html' %}
+        {% include 'patient/Patient_list_2.html' %}<!-- dans une autre html pour ajax -->
         </tbody>
     </table>
 
-    <div class="modal fade" id="modal-book">
+    <div class="modal fade" id="modal-book"><!-- modal -->
         <div class="modal-dialog">
-            <div class="modal-content"></div>
+            <div class="modal-content">
+                <!-- ici les content du modal dans patient_create,update,delete.html  -->
+            </div>
         </div>
-    </div>
+    </div>   <!-- fin modal -->
 {% endblock %}

@@ -10,13 +10,10 @@
                 <span class="glyphicon glyphicon-pencil"></span>
                 edit Patient
             </button>
-        </th>
-        <th>
             <button class="btn btn-danger show-form-delete" data-url="{% url 'patient:patient_delete' patient.id %}">
                 <span class="glyphicon glyphicon-trash"></span>
                 delete Patient
             </button>
         </th>
-
     </tr>
 {% endfor %}

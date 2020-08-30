@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
 
@@ -11,3 +12,12 @@ class Patient(models.Model):
     def __str__(self):
         return self.nom
 
+
+class Consultation(models.Model):
+    patient = models.ForeignKey(Patient, related_name='consultations', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, related_name='consultations', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    motif = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.created_at
