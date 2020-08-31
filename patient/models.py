@@ -17,7 +17,10 @@ class Consultation(models.Model):
     patient = models.ForeignKey(Patient, related_name='consultations', on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, related_name='consultations', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    motif = models.CharField(max_length=250)
+    intervention = models.CharField(max_length=250, null=True, blank=True)
+    intervention_date= models.DateField(null=True, blank=True)
+    mallampati = models.CharField(max_length=250, null=True, blank=True)
+    asa = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
-        return self.motif
+        return self.intervention

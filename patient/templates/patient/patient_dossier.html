@@ -1,12 +1,16 @@
 {% extends 'Patient/base.html' %}
 {% block content %}
-    <h1 class="page-header">dossier patient </h1>
-        nom : {{ patient.nom }}<br>
-        prenom : {{ patient.prenom }}<br>
-        date de naissance : {{ patient.datedenaissance }}<br>
+<h1 class="page-header">dossier patient </h1>
+id patient : {{ patient.id }}<br>
+nom : {{ patient.nom }}<br>
+prénom : {{ patient.prenom }}<br>
+date de naissance : {{ patient.datedenaissance }}<br><br><br>
+    patient du user (doctor) : {{ patient.doctor }}<br>
+    dont le id_user : {{ patient.doctor.id }}<br>
 <br><br><br>
 
     <a href="{% url 'patient:nouvelle_consultaion' patient.id %}" class="btn btn-primary glyphicon glyphicon-flash" > nouvelle consultation </a>
+
     <table class="table" id="book-table">
         <thead class="thead-light">
         <tr>
@@ -14,25 +18,30 @@
             <th>patient</th>
             <th>created_by</th>
             <th>created_at</th>
-            <th>motif</th>
-            <th>action</th>
+            <th>intervention</th>
+            <th>intervention_date</th>
+            <th>asa</th>
+            <th>mallampati</th>
         </tr>
         </thead>
         <tbody>
         {% for consultation in consultation %}
-        <tr>
-            <th>{{ consultation.id }}</th>
-            <th>{{ consultation.patient }}</th>
-            <th>{{ consultation.created_by }}</th>
-            <th>{{ consultation.created_at }}</th>
-            <th>{{ consultation.motif }}</th>
-            <th>
-                <button class="btn btn-danger show-form-delete" data-url="#">
-                    <span class="glyphicon glyphicon-tree-deciduous"></span>
-                    detail de la consultation
-                </button>
-            </th>
-        </tr>
+            <tr>
+                <th>{{ consultation.id }}</th>
+                <th>{{ consultation.patient }}</th>
+                <th>{{ consultation.created_by }}</th>
+                <th>{{ consultation.created_at }}</th>
+                <th>{{ consultation.intervention }}</th>
+                <th>{{ consultation.intervention_date }}</th>
+                <th>{{ consultation.asa }}</th>
+                <th>{{ consultation.mallampati }}</th>
+                <th>
+                    <button class="btn btn-danger show-form-delete" data-url="#">
+                        <span class="glyphicon glyphicon-tree-deciduous"></span>
+                        detail de la consultation
+                    </button>
+                </th>
+            </tr>
         {% endfor %}
         </tbody>
     </table>

@@ -12,7 +12,11 @@
     {% include "patient/snippets/base_css.html" %}
 </head>
 <body>
-
+{% if messages %} <!-- messages -->
+    {% for message in messages %}
+        <div class="alert alert-danger"><h1 class="text-center">{{ message }}</h1></div>
+    {% endfor %}
+{% endif %}<!-- messages -->
 <style type="text/css">
     .container {
         min-height: 100vh;

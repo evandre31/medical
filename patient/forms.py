@@ -1,5 +1,5 @@
 from django import forms
-from .models import Patient
+from .models import Patient, Consultation
 
 
 class PatientForm(forms.ModelForm):
@@ -10,9 +10,9 @@ class PatientForm(forms.ModelForm):
         fields = ('nom', 'prenom', 'datedenaissance')
 
 
-# class PatientForm2(forms.ModelForm):
-#     publication_date = forms.DateTimeInput()
-#
-#     class Meta:
-#         model = Fiche
-#         fields = ('asa', 'mallampati')
+class ConsultationForm(forms.ModelForm):
+    intervention_date = forms.DateTimeInput()
+
+    class Meta:
+        model = Consultation
+        fields = ('intervention', 'asa', 'mallampati', 'intervention_date')

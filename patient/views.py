@@ -1,11 +1,10 @@
-
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 
 # from patients.models import Profile
 from .models import Patient, Consultation
-from .forms import PatientForm
+from .forms import PatientForm, ConsultationForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
@@ -95,11 +94,24 @@ def patient(request):
 
 
 def patient_dossier(request, id):
+    storage = messages.get_messages(request)
     patient = Patient.objects.get(id=id)  # get profile qui a user(dans profile) = au user request
     consultation = Consultation.objects.filter(patient_id=id)  # get profile qui a user(dans profile) = au user request
     return render(request, 'patient/patient_dossier.html', {'patient': patient, 'consultation': consultation})
 
 
 def nouvelle_consultaion(request, id):
-    patient = Patient.objects.get(id=id)  # get profile qui a user(dans profile) = au user request
-    return render(request, 'patient/nouvelle_consultation.html', {'patient': patient})
+    patient = Patient.objects.get(id=id)  # patient sur le quel on est positionné
+    form = ConsultationForm(request.POST)
+    user = request.user
+    if request.method == 'POST':
+        consultation = form.save(commit=False)
+        consultation.created_by = user
+        consultation.patient = patient
+        consultation.save()
+        messages.success(request, 'consultation ajouté')  # qui sera affiché dans redirect template
+        return redirect('patient:patient_dossier', patient.id)
+    else:
+        form = ConsultationForm()
+    return render(request, 'patient/nouvelle_consultation.html', {'patient': patient, 'form': form})
+
