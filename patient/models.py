@@ -20,4 +20,4 @@ class Consultation(models.Model):
     motif = models.CharField(max_length=250)
 
     def __str__(self):
-        return self.created_at
+        return self.motif

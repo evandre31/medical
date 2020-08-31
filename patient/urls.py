@@ -1,4 +1,3 @@
-from django.conf.urls import url, include
 from django.urls import path
 from . import views
 
@@ -10,4 +9,6 @@ urlpatterns = [
     path('patient/create', views.patient_create, name='patient_create'),
     path('patient/(?P<id>\d+)/update', views.patient_update, name='patient_update'),
     path('patient/(?P<id>\d+)/delete', views.patient_delete, name='patient_delete'),
+    path('patient/(?P<id>\d+)/', views.patient_dossier, name='patient_dossier'),
+    path('patient/(?P<id>\d+)/consultation/nouvelle', views.nouvelle_consultaion, name='nouvelle_consultaion'),
 ]

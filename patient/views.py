@@ -1,9 +1,10 @@
+
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 
 # from patients.models import Profile
-from .models import Patient
+from .models import Patient, Consultation
 from .forms import PatientForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
@@ -93,5 +94,12 @@ def patient(request):
     return render(request, 'patient/patient.html')
 
 
-def patient(request):
-    return render(request, 'patient/patient.html')
+def patient_dossier(request, id):
+    patient = Patient.objects.get(id=id)  # get profile qui a user(dans profile) = au user request
+    consultation = Consultation.objects.filter(patient_id=id)  # get profile qui a user(dans profile) = au user request
+    return render(request, 'patient/patient_dossier.html', {'patient': patient, 'consultation': consultation})
+
+
+def nouvelle_consultaion(request, id):
+    patient = Patient.objects.get(id=id)  # get profile qui a user(dans profile) = au user request
+    return render(request, 'patient/nouvelle_consultation.html', {'patient': patient})

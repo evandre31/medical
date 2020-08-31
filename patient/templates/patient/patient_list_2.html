@@ -14,6 +14,7 @@
                 <span class="glyphicon glyphicon-trash"></span>
                 delete Patient
             </button>
+            <a href="{% url 'patient:patient_dossier' patient.id %}" class="btn btn-success glyphicon glyphicon-open-file" > dossier </a>
         </th>
     </tr>
 {% endfor %}
