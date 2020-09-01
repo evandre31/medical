@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -9,6 +10,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 
+@login_required
 def patient_list(request):
     user = request.user  # si non authenticated redirect to login ou autre page
     # patients = Fiche.objects.all()
@@ -89,10 +91,11 @@ def patient_delete(request, id):
     return JsonResponse(data)
 
 
+@login_required
 def patient(request):
     return render(request, 'patient/patient.html')
 
-
+@login_required
 def patient_dossier(request, id):
     storage = messages.get_messages(request)
     patient = Patient.objects.get(id=id)  # get profile qui a user(dans profile) = au user request
@@ -100,18 +103,19 @@ def patient_dossier(request, id):
     return render(request, 'patient/patient_dossier.html', {'patient': patient, 'consultation': consultation})
 
 
+@login_required
 def nouvelle_consultaion(request, id):
     patient = Patient.objects.get(id=id)  # patient sur le quel on est positionné
     form = ConsultationForm(request.POST)
     user = request.user
     if request.method == 'POST':
-        consultation = form.save(commit=False)
-        consultation.created_by = user
-        consultation.patient = patient
-        consultation.save()
-        messages.success(request, 'consultation ajouté')  # qui sera affiché dans redirect template
-        return redirect('patient:patient_dossier', patient.id)
+        if form.is_valid():
+            consultation = form.save(commit=False)
+            consultation.created_by = user
+            consultation.patient = patient
+            consultation.save()
+            messages.success(request, 'consultation ajouté')  # qui sera affiché dans redirect template
+            return redirect('patient:patient_dossier', patient.id)
     else:
         form = ConsultationForm()
     return render(request, 'patient/nouvelle_consultation.html', {'patient': patient, 'form': form})
-

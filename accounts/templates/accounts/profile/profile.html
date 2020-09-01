@@ -17,5 +17,6 @@
 {{ profile.phone }}<br> <!--pour accéder au field de profile -->
 {{ profile.address }} <br>  <!--pour accéder au field de profile -->
 <img src = "{{ profile.image.url }}" alt="" width="100"><!--pour accéder au field de profile -->
+    <a href="{% url 'accounts:profile_edit' %}" class="btn btn-success">edit profile</a>
 
 {% endblock %}

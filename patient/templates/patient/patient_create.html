@@ -1,5 +1,5 @@
 {#{% load crispy_forms_tags %}#}
-<form method="post" data-url="{% url 'patient:patient_create' %}" class="create-form">
+<form method="post" data-url="{% url 'patient:patient_create' %}" class="create-form" novalidate>
     {% csrf_token %}
     <div class="modal-header">
         <h5 class="modal-title">Create Patient</h5>
@@ -8,7 +8,7 @@
         </button>
     </div>
     <div class="modal-body">
-        {{ form }}
+{% include 'includes/forms.html' %}
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

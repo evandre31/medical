@@ -9,9 +9,8 @@ prénom : {{ patient.prenom }}<br>
         dont le id_user : {{ patient.doctor.id }}<br>
 <br><br><br>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">nouvelle consultation </button>
+    <form method="post" novalidate>{% csrf_token %}
+{% include 'includes/forms.html' %}
+        <button type="submit">nouvelle consultation</button>
     </form>
 {% endblock %}

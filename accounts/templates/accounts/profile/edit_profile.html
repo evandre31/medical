@@ -1,10 +1,56 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
+
 {% block content %}
     <h2> edition profile de {{ user.username }} </h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ userform.as_p }}
-        {{ profileform.as_p }}
+    <form method="POST" enctype="multipart/form-data" novalidate>{% csrf_token %}
+        <!-- userform  -->
+        {% for field in userform %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {% if userform.is_bound %}
+                    {% if field.errors %}
+                        {% render_field field class='form-control is-invalid' %}
+                        {% for error in field.errors %}
+                            <div class='invalid-feedback'>{{ error }}</div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field field class='form-control is-valid' %}
+                    {% endif %}
+                {% else %}
+                    {% render_field field class='form-control' %}
+                {% endif %}
+            </div>
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+        {% endfor %}
+        <!-- userform fin -->
+
+
+        <!-- profileform -->
+        {% for field in profileform %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {% if profileform.is_bound %}
+                    {% if field.errors %}
+                        {% render_field field class='form-control is-invalid' %}
+                        {% for error in field.errors %}
+                            <div class='invalid-feedback'>{{ error }}</div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field field class='form-control is-valid' %}
+                    {% endif %}
+                {% else %}
+                    {% render_field field class='form-control' %}
+                {% endif %}
+            </div>
+            {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+            {% endif %}
+        {% endfor %}
+        <!-- profileform fin -->
+
         <!-- Image -->
         <div class="form-group image-group" id="id_image_group">
             <img class="img-fluid image" src="{{ profileform.initial.image.url }}" id="id_image_display" width="350"
@@ -20,44 +66,44 @@
 
 
     <style type="text/css"> <!--  -->
-        .image {
-            opacity: 1;
-            transition: .5s ease;
-            backface-visibility: hidden;
-        }
+    .image {
+        opacity: 1;
+        transition: .5s ease;
+        backface-visibility: hidden;
+    }
 
-        .middle {
-            transition: .5s ease;
-            opacity: 0;
-            position: absolute;
-            text-align: center;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+    .middle {
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
 
-        }
+    }
 
-        .image-group {
-            position: relative;
-            text-align: center;
-            cursor: pointer;
-        }
+    .image-group {
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+    }
 
-        .image-group:hover .image {
-            opacity: 0.3;
-        }
+    .image-group:hover .image {
+        opacity: 0.3;
+    }
 
-        .image-group:hover .middle {
-            opacity: 1;
-        }
+    .image-group:hover .middle {
+        opacity: 1;
+    }
 
-        .text {
-            margin: auto;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 15px;
-            padding: 15px;
-        }
+    .text {
+        margin: auto;
+        background-color: #4CAF50;
+        color: white;
+        font-size: 15px;
+        padding: 15px;
+    }
     </style><!-- style pour image et son button -->
 
     <script type="text/javascript">
