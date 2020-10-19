@@ -134,6 +134,9 @@ def consultation_create(request, id):
             consultation.patient = patient
             form.save()
             data['form_is_valid'] = True
+            consultation = Consultation.objects.filter(patient_id=id)
+            data['consultation_list'] = render_to_string('patient/consultation_list_2.html',
+                                                         {'consultation': consultation})
         else:
             data['form_is_valid'] = False
     else:

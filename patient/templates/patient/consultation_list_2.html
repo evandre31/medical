@@ -1,0 +1,18 @@
+{% for consultation in consultation %}
+    <tr>
+        <th>{{ consultation.id }}</th>
+        <th>{{ consultation.patient }}</th>
+        <th>{{ consultation.created_by }}</th>
+        <th>{{ consultation.created_at }}</th>
+        <th>{{ consultation.intervention }}</th>
+        <th>{{ consultation.intervention_date }}</th>
+        <th>{{ consultation.asa }}</th>
+        <th>{{ consultation.mallampati }}</th>
+        <th>
+            <button class="btn btn-danger show-form-delete" data-url="#">
+                <span class="glyphicon glyphicon-tree-deciduous"></span>
+                detail de la consultation
+            </button>
+        </th>
+    </tr>
+{% endfor %}

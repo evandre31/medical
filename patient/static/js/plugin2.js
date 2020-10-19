@@ -22,7 +22,8 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 if (data.form_is_valid){
-                    console.log('data is save');
+                    $('#book-table tbody').html(data.consultation_list);
+                    $('#modal-book').modal('hide');
                 }else {
                     $('#modal-book .modal-content').html(data.html_form);
                 }
