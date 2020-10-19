@@ -122,12 +122,11 @@ def nouvelle_consultaion(request, id):
     return render(request, 'patient/nouvelle_consultation.html', {'patient': patient, 'form': form})
 
 
-def consultation_create(request, id):
+def save_all2(request, id, form, template_name):
     patient = Patient.objects.get(id=id)
     user = request.user
     data = dict()
     if request.method == 'POST':
-        form = ConsultationForm(request.POST)
         if form.is_valid():
             consultation = form.save(commit=False)
             consultation.created_by = user
@@ -136,14 +135,46 @@ def consultation_create(request, id):
             data['form_is_valid'] = True
             consultation = Consultation.objects.filter(patient_id=id)
             data['consultation_list'] = render_to_string('patient/consultation_list_2.html',
-                                                         {'consultation': consultation})
+                                                         {'consultation': consultation, 'patient': patient})
         else:
             data['form_is_valid'] = False
-    else:
-        form = ConsultationForm()
     context = {
         'form': form, 'patient': patient
     }
-
-    data['html_form'] = render_to_string('patient/consultation_create.html', context, request=request)
+    data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
+
+
+def consultation_create(request, id):
+    if request.method == 'POST':
+        form = ConsultationForm(request.POST)
+    else:
+        form = ConsultationForm()
+    return save_all2(request, id, form, 'patient/consultation_create.html')
+
+
+def consultation_update(request, id, id_consultation):
+    consultation = get_object_or_404(Consultation, id=id_consultation)
+    if request.method == 'POST':
+        form = ConsultationForm(request.POST, instance=consultation)
+    else:
+        form = ConsultationForm(instance=consultation)
+    return save_all2(request, id, form, 'patient/consultation_update.html')
+
+
+def consultation_delete(request, id, id_consultation):
+    patient = Patient.objects.get(id=id)
+    data = dict()
+    consultation = get_object_or_404(Consultation, id=id_consultation)
+    if request.method == 'POST':
+        consultation.delete()
+        data['form_is_valid'] = True
+        consultation = Consultation.objects.filter(patient_id=id)
+        data['consultation_list'] = render_to_string('patient/consultation_list_2.html',
+                                                     {'consultation': consultation})
+    else:
+        context = {'consultation': consultation, 'patient': patient}
+        data['html_form'] = render_to_string('patient/consultation_delete.html',
+                                             context, request=request)
+    return JsonResponse(data)
+

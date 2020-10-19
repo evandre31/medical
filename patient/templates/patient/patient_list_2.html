@@ -17,4 +17,6 @@
             <a href="{% url 'patient:patient_dossier' patient.id %}" class="btn btn-success glyphicon glyphicon-open-file" > dossier </a>
         </th>
     </tr>
+    {% empty %}
+    <tr><td colspan="9" class="text-center bg-warning">aucun patient</td></tr>
 {% endfor %}

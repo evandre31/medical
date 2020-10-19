@@ -9,10 +9,20 @@
         <th>{{ consultation.asa }}</th>
         <th>{{ consultation.mallampati }}</th>
         <th>
-            <button class="btn btn-danger show-form-delete" data-url="#">
+            <button class="btn btn-primary">
                 <span class="glyphicon glyphicon-tree-deciduous"></span>
-                detail de la consultation
+                detail
+            </button>
+            <button class="btn btn-warning show-form-update" data-url="{% url 'patient:consultation_update' patient.id consultation.id %}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                edit
+            </button>
+            <button class="btn btn-danger show-form-delete" data-url="{% url 'patient:consultation_delete' patient.id consultation.id %}">
+                <span class="glyphicon glyphicon-trash"></span>
+                delete
             </button>
         </th>
     </tr>
+{% empty %}
+    <tr><td colspan="9" class="text-center bg-warning">aucune consultation</td></tr>
 {% endfor %}
