@@ -1,4 +1,4 @@
-{% extends 'Patient/base.html' %}
+{% extends 'Patient/base2.html' %}
 {% block content %}
 <h1 class="page-header">dossier patient </h1>
 id patient : {{ patient.id }}<br>
@@ -10,6 +10,12 @@ date de naissance : {{ patient.datedenaissance }}<br><br><br>
 <br><br><br>
 
     <a href="{% url 'patient:nouvelle_consultaion' patient.id %}" class="btn btn-primary glyphicon glyphicon-flash" > nouvelle consultation </a>
+
+    <button class="btn btn-primary show-form" data-url="{% url 'patient:consultation_create' patient.id %}">
+        <span class="glyphicon glyphicon-plus"></span>
+        nouvelle consultation modal
+    </button>
+
 
     <table class="table" id="book-table">
         <thead class="thead-light">
@@ -45,5 +51,14 @@ date de naissance : {{ patient.datedenaissance }}<br><br><br>
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="modal fade" id="modal-book"><!-- modal -->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- ici les content du modal dans patient_create,update,delete.html  -->
+            </div>
+        </div>
+    </div>   <!-- fin modal -->
+
 
 {% endblock %}

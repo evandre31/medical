@@ -95,6 +95,7 @@ def patient_delete(request, id):
 def patient(request):
     return render(request, 'patient/patient.html')
 
+
 @login_required
 def patient_dossier(request, id):
     storage = messages.get_messages(request)
@@ -119,3 +120,13 @@ def nouvelle_consultaion(request, id):
     else:
         form = ConsultationForm()
     return render(request, 'patient/nouvelle_consultation.html', {'patient': patient, 'form': form})
+
+
+def consultation_create(request, id):
+    form = ConsultationForm()
+    patient = Patient.objects.get(id=id)
+    context = {
+        'form': form, 'patient': patient
+    }
+    html_form = render_to_string('patient/consultation_create.html', context, request=request)
+    return JsonResponse({'html_form': html_form})
