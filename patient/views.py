@@ -123,10 +123,24 @@ def nouvelle_consultaion(request, id):
 
 
 def consultation_create(request, id):
-    form = ConsultationForm()
     patient = Patient.objects.get(id=id)
+    user = request.user
+    data = dict()
+    if request.method == 'POST':
+        form = ConsultationForm(request.POST)
+        if form.is_valid():
+            consultation = form.save(commit=False)
+            consultation.created_by = user
+            consultation.patient = patient
+            form.save()
+            data['form_is_valid'] = True
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = ConsultationForm()
     context = {
         'form': form, 'patient': patient
     }
-    html_form = render_to_string('patient/consultation_create.html', context, request=request)
-    return JsonResponse({'html_form': html_form})
+
+    data['html_form'] = render_to_string('patient/consultation_create.html', context, request=request)
+    return JsonResponse(data)
